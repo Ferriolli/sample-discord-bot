@@ -1,3 +1,5 @@
+import random
+
 import discord
 from discord.ext import commands
 
@@ -10,6 +12,13 @@ class SampleCog(commands.Cog):
     @commands.command()
     async def hello(self, ctx) -> None:
         await ctx.send(f'Hello world')
+
+    @commands.command()
+    async def dice(self, ctx, number):
+        rnum = random.randint(1, 6)
+        if int(number) == rnum:
+            return await ctx.send(f'Got the right number: {rnum}')
+        await ctx.send(f'Wrong number, the correct was: {rnum}')
 
     @commands.Cog.listener()
     async def on_ready(self) -> None:
@@ -28,7 +37,7 @@ class SampleCog(commands.Cog):
         """
         if message.author == self._bot.user:
             return
-        await message.channel.send(f'User sent a message')
+        # await message.channel.send(f'User {message.author.name} sent a message')
 
 
 async def setup(bot: commands.Bot):
